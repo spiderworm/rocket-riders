@@ -1,0 +1,22 @@
+{
+  "name": "rocket-riders",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cannon": "0.6.2",
+    "decs": "0.0.3",
+    "object-hero": "0.0.2",
+    "three": "0.84.0"
+  },
+  "devDependencies": {
+    "json-loader": "0.5.4",
+    "webpack": "2.2.1",
+    "webpack-dev-server": "2.3.0"
+  }
+}
