@@ -119,10 +119,6 @@ var MeshSystem = DECS.createSystemClass(
 						shape.size.x, shape.size.y, shape.size.z,
 						shape.borderRadius, shape.roundness
 					);
-					var geometry2 = new THREE.BoxGeometry(
-						shape.size.x, shape.size.y, shape.size.z
-					);
-					geometry.merge(geometry2);
 				break;
 			}
 			var material = defaultMaterial;
