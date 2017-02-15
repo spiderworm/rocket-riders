@@ -6,9 +6,9 @@ function Arena(config) {
 	config = objectHero.assignDeep(
 		{
 			type: Arena.NAME,
-			size: { x: 200, y: 200, z: 200 },
+			size: { x: 100, y: 100, z: 100 },
 			roundness: 25,
-			borderRadius: 100
+			borderRadius: 50
 		},
 		[config]
 	);

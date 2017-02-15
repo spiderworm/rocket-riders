@@ -34,7 +34,7 @@ function StandardDemo() {
 	game.riderSystem.setRocket(game.player, game.rocket);
 
 	function engineStart() {
-		game.rocket.throttle = 1;
+		game.rocket.throttle = .5;
 		setTimeout(engineStop, 5000);
 	}
 

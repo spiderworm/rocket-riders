@@ -6,6 +6,7 @@ var Cylinder = require('../shapes/Cylinder.js');
 var Sphere = require('../shapes/Sphere.js');
 var CustomShape = require('../shapes/CustomShape.js');
 var Arena = require('../shapes/Arena.js');
+var ThreeArenaGeometry = require('./ThreeArenaGeometry.js');
 
 var wireframes = false;
 
@@ -114,13 +115,14 @@ var MeshSystem = DECS.createSystemClass(
 					};
 				break;
 				case Arena.NAME:
-					
-					geometry = new THREE.BoxGeometry(
+					geometry = new ThreeArenaGeometry(
 						shape.size.x, shape.size.y, shape.size.z,
-						Math.ceil(shape.size.x/10), Math.ceil(shape.size.y/10), Math.ceil(shape.size.z/10)
+						shape.borderRadius, shape.roundness
 					);
-					
-					//geometry = new THREE.SphereGeometry(shape.borderRadius, shape.roundness, shape.roundness);
+					var geometry2 = new THREE.BoxGeometry(
+						shape.size.x, shape.size.y, shape.size.z
+					);
+					geometry.merge(geometry2);
 				break;
 			}
 			var material = defaultMaterial;

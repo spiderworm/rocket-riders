@@ -17,12 +17,24 @@ var Arena = PhysicalEntity.createClass({
 		mass: 0
 	},
 	shapes: {
-		0: new ArenaShape({ wireframe: true, color: 0x999999 })
+		0: new ArenaShape({
+			wireframe: true,
+			color: 0x999999,
+			roundness: 10,
+			size: {
+				x: 100,
+				y: 200,
+				z: 100
+			},
+			borderRadius: 20
+		})
 	}
 });
 
 function ArenaPhysicsDemo() {
 	var game = new StandardDemo();
+
+	game.rocket.physics.position.z = 0;
 
 	game.arena = new Arena();
 	game.addEntity(game.arena);
