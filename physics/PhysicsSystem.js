@@ -33,7 +33,7 @@ var PhysicsSystem = DECS.createSystemClass(
 			return this.getEntitySystemComponent(entity).body;
 		},
 		_addEntityBody: function(entity, systemComponents) {
-			if (entity.physics && !systemComponents.body) {
+			if (entity.physics && entity.physics.collision && !systemComponents.body) {
 				var body = new CANNON.Body({
 					mass: entity.physics.mass,
 					angularDamping: entity.physics.angularDamping,
@@ -47,11 +47,7 @@ var PhysicsSystem = DECS.createSystemClass(
 				if (entity.entities) {
 					Object.keys(entity.entities).forEach(function(id) {
 						var subEntity = entity.entities[id];
-						if (subEntity.shapes) {
-							Object.keys(subEntity.shapes).forEach(function(id) {
-								this._addShape(subEntity.shapes[id], body);
-							}.bind(this));
-						}
+						this._addEntityBody(subEntity, this.getEntitySystemComponent(subEntity));
 					}.bind(this));
 				}
 

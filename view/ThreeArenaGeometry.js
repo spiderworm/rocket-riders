@@ -21,7 +21,7 @@ function ArenaGeometry( width, height, depth, radius, roundness ) {
 		roundness: roundness
 	};
 
-	var geometry = new SphereGeometry(radius, roundness * 4, roundness * 4, 0, Math.PI * 2.01, 0, Math.PI);
+	var geometry = new SphereGeometry(radius, roundness * 4, roundness * 4, Math.PI/2, Math.PI * 2.01, 0, Math.PI);
 
 	var adjustments = new Vector3((width / 2) - radius, (height / 2) - radius, (depth / 2) - radius);
 

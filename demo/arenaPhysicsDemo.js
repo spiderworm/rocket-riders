@@ -4,42 +4,23 @@ var StandardDemo = require('./StandardDemo.js');
 var DECS = require('decs');
 var PhysicalEntity = require('../PhysicalEntity.js');
 var Sphere = require('../shapes/Sphere.js');
-var ArenaShape = require('../shapes/Arena.js');
+var StandardArena = require('../levels/StandardArena.js');
 
 var Ball = PhysicalEntity.createClass({
 	shapes: {
-		0: new Sphere({ size: 1, roundness: 20, wireframe: true })
-	}
-});
-
-var Arena = PhysicalEntity.createClass({
-	physics: {
-		mass: 0
-	},
-	shapes: {
-		0: new ArenaShape({
-			wireframe: true,
-			color: 0x999999,
-			roundness: 10,
-			size: {
-				x: 100,
-				y: 200,
-				z: 100
-			},
-			borderRadius: 20
-		})
+		0: new Sphere({ size: 10, roundness: 20, wireframe: true, physics: { mass: 1000 } })
 	}
 });
 
 function ArenaPhysicsDemo() {
 	var game = new StandardDemo();
 
-	game.rocket.physics.position.z = 0;
+	game.rocket.physics.position.z = -90;
 
-	game.arena = new Arena();
+	game.arena = new StandardArena();
 	game.addEntity(game.arena);
 
-	var ballCount = 20;
+	var ballCount = 50;
 	for (var i=0; i<ballCount; i++) {
 		var ball = new Ball();
 		ball.physics.position = {

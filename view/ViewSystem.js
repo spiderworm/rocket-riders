@@ -26,10 +26,7 @@ var ViewSystem = DECS.createSystemClass(
 
 		this.meshes = new MeshSystem(this.scene);
 		this.addSystem(this.meshes);
-/*
-		var visionSystem = new VisionSystem(this.scene);
-		this.addSystem(visionSystem);
-*/
+
 	},
 	{
 		tick: function() {

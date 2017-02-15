@@ -4,6 +4,7 @@ var DECS = require('decs');
 var Box = require('../shapes/Box.js');
 var Cylinder = require('../shapes/Cylinder.js');
 var Sphere = require('../shapes/Sphere.js');
+var Hemisphere = require('../shapes/Hemisphere.js');
 var CustomShape = require('../shapes/CustomShape.js');
 var Arena = require('../shapes/Arena.js');
 var ThreeArenaGeometry = require('./ThreeArenaGeometry.js');
@@ -77,6 +78,9 @@ var MeshSystem = DECS.createSystemClass(
 			switch(shape.type) {
 				case Sphere.NAME:
 					geometry = new THREE.SphereGeometry(shape.size / 2, shape.roundness, shape.roundness);
+				break;
+				case Hemisphere.NAME:
+					geometry = new THREE.SphereGeometry(shape.size / 2, shape.roundness, shape.roundness, 0, 2 * Math.PI, 0, Math.PI / 2);
 				break;
 				case Box.NAME:
 					geometry = new THREE.CubeGeometry(

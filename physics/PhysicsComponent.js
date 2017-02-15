@@ -1,6 +1,7 @@
 
 var PhysicsComponent = function() {
 	return {
+		collision: true,
 		mass: 1,
 		position: {
 			x: 0,
