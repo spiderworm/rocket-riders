@@ -4,6 +4,7 @@ var THREE = require('three');
 
 var CameraSystem = require('./CameraSystem.js');
 var MeshSystem = require('./MeshSystem.js');
+var VrSystem = require('./VrSystem.js');
 
 var ViewSystem = DECS.createSystemClass(
 	function() {
@@ -17,8 +18,10 @@ var ViewSystem = DECS.createSystemClass(
 		this.camera.up.set(0,0,1);
 
 		this.renderer = new THREE.WebGLRenderer({
-			canvas: this.canvas
+			canvas: this.canvas,
+			antialias: true
 		});
+		this.renderer.setPixelRatio(window.devicePixelRatio);
 
 		this.cameraSystem = new CameraSystem(this.camera);
 		this.addSystem(this.cameraSystem);
@@ -26,6 +29,7 @@ var ViewSystem = DECS.createSystemClass(
 		this.meshes = new MeshSystem(this.scene);
 		this.addSystem(this.meshes);
 
+		this.vrSystem = new VrSystem(this.camera, this.renderer);
 	},
 	{
 		tick: function() {

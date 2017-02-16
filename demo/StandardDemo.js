@@ -48,7 +48,7 @@ function StandardDemo() {
 		setTimeout(engineStart, 2000);
 	}
 
-	engineStop();
+	//engineStop();
 
 	game.view = new ViewSystem();
 	game.addSystem(game.view);

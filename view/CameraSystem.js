@@ -14,7 +14,7 @@ var CameraSystem = DECS.createSystemClass(
 			this.lookAtTarget();
 		},
 		tick: function() {
-			this.lookAtTarget();
+			//this.lookAtTarget();
 		},
 		lookAtTarget: function() {
 			if (this.three) {
