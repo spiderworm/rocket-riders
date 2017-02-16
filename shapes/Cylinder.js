@@ -7,7 +7,7 @@ function Cylinder(config) {
 		{
 			type: Cylinder.NAME,
 			size: { diameter: 1, length: 1 },
-			roundness: 8
+			detail: 8
 		},
 		[config]
 	);

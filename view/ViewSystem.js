@@ -13,9 +13,8 @@ var ViewSystem = DECS.createSystemClass(
 		document.querySelector('article').appendChild(this.canvas);
 
 		this.scene = new THREE.Scene();
-		this.camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+		this.camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1e20);
 		this.camera.up.set(0,0,1);
-		this.camera.far = 1e20;
 
 		this.renderer = new THREE.WebGLRenderer({
 			canvas: this.canvas

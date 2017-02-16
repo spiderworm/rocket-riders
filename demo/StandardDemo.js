@@ -20,6 +20,11 @@ function StandardDemo() {
 	game.addSystem(game.rocketSystem);
 
 	game.rocket = new Rocket1();
+	game.rocket.physics.position = {
+		x: 0,
+		y: 0,
+		z: 5
+	};
 	game.addEntity(game.rocket);
 
 	game.player = new Rider1();
@@ -27,15 +32,15 @@ function StandardDemo() {
 	game.player.physics.position = {
 		x: game.rocket.physics.position.x,
 		y: game.rocket.physics.position.y,
-		z: game.rocket.physics.position.z + 1
+		z: game.rocket.physics.position.z + 2
 	};
 	game.addEntity(game.player);
 
 	game.riderSystem.setRocket(game.player, game.rocket);
 
 	function engineStart() {
-		game.rocket.throttle = .5;
-		setTimeout(engineStop, 5000);
+		game.rocket.throttle = 1;
+		//setTimeout(engineStop, 5000);
 	}
 
 	function engineStop() {
@@ -48,7 +53,7 @@ function StandardDemo() {
 	game.view = new ViewSystem();
 	game.addSystem(game.view);
 	game.view.tick();
-	game.view.cameraSystem.setTarget(game.view.meshes.getEntityMesh(game.player));
+	game.view.cameraSystem.setTarget(game.view.meshes.getEntityMesh(game.rocket));
 
 	window.game = game;
 	console.info('game', game);

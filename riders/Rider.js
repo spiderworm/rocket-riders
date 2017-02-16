@@ -8,7 +8,7 @@ var Rider = PhysicalEntity.createClass({
 		body: new Sphere({ color: 0xffffff, size: 1 })
 	},
 	physics: {
-		mass: 1e2
+		mass: .001
 	},
 	rocket: null,
 	ridingPoints: {

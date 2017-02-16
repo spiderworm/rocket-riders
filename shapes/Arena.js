@@ -7,7 +7,7 @@ function Arena(config) {
 		{
 			type: Arena.NAME,
 			size: { x: 100, y: 100, z: 100 },
-			roundness: 25,
+			detail: 25,
 			borderRadius: 50
 		},
 		[config]

@@ -4,7 +4,7 @@ var Hemisphere = require('../shapes/Hemisphere.js');
 
 var wireframe = true;
 var size = 2000;
-var roundness = 100;
+var detail = 100;
 
 var Skybox = PhysicalEntity.createClass({
 	physics: {
@@ -14,7 +14,7 @@ var Skybox = PhysicalEntity.createClass({
 		sky: new Hemisphere({
 			wireframe: wireframe,
 			color: 0x112266,
-			roundness: roundness,
+			detail: detail,
 			size: size,
 			rotation: {
 				w: .717,
@@ -26,7 +26,7 @@ var Skybox = PhysicalEntity.createClass({
 		ground: new Hemisphere({
 			wireframe: wireframe,
 			color: 0x116622,
-			roundness: roundness,
+			detail: detail,
 			size: size,
 			rotation: {
 				w: .717,

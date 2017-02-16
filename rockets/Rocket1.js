@@ -3,6 +3,7 @@ var PhysicalEntity = require('../PhysicalEntity.js');
 var Cylinder = require('../shapes/Cylinder.js');
 var Box = require('../shapes/Box.js');
 var Sphere = require('../shapes/Sphere.js');
+var RocketTrail1 = require('./RocketTrail1.js');
 
 var color = 0x990000;
 
@@ -18,6 +19,14 @@ var Rocket1 = PhysicalEntity.createClass(
 	{
 		isRocket: true,
 		throttle: 0,
+		physics: {
+			mass: 1e4,
+			linearDamping: .2,
+			angularDamping: .2
+		},
+		entities: {
+			//trail: new RocketTrail1()
+		},
 		shapes: {
 			/*
 			body: new Cylinder({
@@ -26,7 +35,7 @@ var Rocket1 = PhysicalEntity.createClass(
 					diameter: 1,
 					length: 4
 				},
-				roundness: 30
+				detail: 30
 			}),
 			*/
 			bodyCollision1: new Sphere({
@@ -111,12 +120,6 @@ var Rocket1 = PhysicalEntity.createClass(
 				}
 			})
 		},
-		physics: {
-			mass: 1e4,
-			linearDamping: .2,
-			angularDamping: .2
-		},
-		type: 'Rocket1',
 		mountingPoints: {
 			left: {
 				x: -.5,

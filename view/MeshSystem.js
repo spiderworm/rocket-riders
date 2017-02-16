@@ -36,13 +36,13 @@ var MeshSystem = DECS.createSystemClass(
 		},
 		getEntityMesh: function(entity) {
 			var systemComponent = this.getEntitySystemComponent(entity);
-			if (!systemComponent.mesh) {
+			if (!systemComponent.object3D) {
 				this._addEntityMesh(entity, systemComponent, this.scene);
 			}
-			return systemComponent.mesh;
+			return systemComponent.object3D;
 		},
-		_addEntityMesh: function(entity, systemComponents, threeParent) {
-			if (!systemComponents.mesh && entity.isAlive && entity.view) {
+		_addEntityMesh: function(entity, systemComponents) {
+			if (!systemComponents.object3D && entity.isAlive && entity.view) {
 				//var geometry = new THREE.SphereGeometry(1, 10, 10);
 				//var object3D = new THREE.Mesh(geometry, defaultMaterial);
 				var object3D = new THREE.Object3D();
@@ -55,7 +55,7 @@ var MeshSystem = DECS.createSystemClass(
 
 				if (entity.entities) {
 					Object.keys(entity.entities).forEach(function(id) {
-						this._addEntityMesh(entity.entities[id], {}, object3D);
+						this._addEntityMesh(entity.entities[id], {});
 					}.bind(this));
 				}
 
@@ -69,18 +69,18 @@ var MeshSystem = DECS.createSystemClass(
 					object3D.quaternion.set(rotation.x, rotation.y, rotation.z, rotation.w);
 				}
 
-				systemComponents.mesh = object3D;
-				threeParent.add(object3D);
+				systemComponents.object3D = object3D;
+				this.scene.add(object3D);
 			}
 		},
 		_addShapeMesh: function(shape, threeParent) {
 			var geometry = defaultGeometry;
 			switch(shape.type) {
 				case Sphere.NAME:
-					geometry = new THREE.SphereGeometry(shape.size / 2, shape.roundness, shape.roundness);
+					geometry = new THREE.SphereGeometry(shape.size / 2, shape.detail, shape.detail);
 				break;
 				case Hemisphere.NAME:
-					geometry = new THREE.SphereGeometry(shape.size / 2, shape.roundness, shape.roundness, 0, 2 * Math.PI, 0, Math.PI / 2);
+					geometry = new THREE.SphereGeometry(shape.size / 2, shape.detail, shape.detail, 0, 2 * Math.PI, 0, Math.PI / 2);
 				break;
 				case Box.NAME:
 					geometry = new THREE.CubeGeometry(
@@ -94,7 +94,7 @@ var MeshSystem = DECS.createSystemClass(
 						shape.size.diameter / 2,
 						shape.size.diameter / 2,
 						shape.size.length,
-						shape.roundness
+						shape.detail
 					);
 				break;
 				case CustomShape.NAME:
@@ -121,7 +121,7 @@ var MeshSystem = DECS.createSystemClass(
 				case Arena.NAME:
 					geometry = new ThreeArenaGeometry(
 						shape.size.x, shape.size.y, shape.size.z,
-						shape.borderRadius, shape.roundness
+						shape.borderRadius, shape.detail
 					);
 				break;
 			}
@@ -144,12 +144,12 @@ var MeshSystem = DECS.createSystemClass(
 			threeParent.add(mesh);
 		},
 		_applyEntityPhysics: function(entity, systemComponents) {
-			if (entity.physics && systemComponents.mesh) {
-				var mesh = systemComponents.mesh;
+			if (entity.physics && systemComponents.object3D) {
+				var object3D = systemComponents.object3D;
 				var position = entity.physics.position;
-				mesh.position.set(position.x, position.y, position.z);
+				object3D.position.set(position.x, position.y, position.z);
 				var rotation = entity.physics.rotation;
-				mesh.quaternion.set(rotation.x, rotation.y, rotation.z, rotation.w);
+				object3D.quaternion.set(rotation.x, rotation.y, rotation.z, rotation.w);
 			}
 		}
 	}

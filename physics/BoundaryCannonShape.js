@@ -87,12 +87,12 @@ CANNON.Narrowphase.prototype.sphereBoundary = function(
     var emptyExtents = boundaryShape.emptyExtents;
     var testPosition = new CANNON.Vec3();
     testPosition.copy(spherePosition);
-    testPosition.x = Math.min(testPosition.x, emptyExtents.x);
-    testPosition.x = Math.max(testPosition.x, -emptyExtents.x);
-    testPosition.y = Math.min(testPosition.y, emptyExtents.y);
-    testPosition.y = Math.max(testPosition.y, -emptyExtents.y);
-    testPosition.z = Math.min(testPosition.z, emptyExtents.z);
-    testPosition.z = Math.max(testPosition.z, -emptyExtents.z);
+    testPosition.x = Math.min(testPosition.x, boundaryPosition.x + emptyExtents.x);
+    testPosition.x = Math.max(testPosition.x, boundaryPosition.x - emptyExtents.x);
+    testPosition.y = Math.min(testPosition.y, boundaryPosition.y + emptyExtents.y);
+    testPosition.y = Math.max(testPosition.y, boundaryPosition.y - emptyExtents.y);
+    testPosition.z = Math.min(testPosition.z, boundaryPosition.z + emptyExtents.z);
+    testPosition.z = Math.max(testPosition.z, boundaryPosition.z - emptyExtents.z);
 
     var dist = testPosition.distanceTo(spherePosition);
     if (dist >= boundaryShape.radius - sphereShape.radius) {

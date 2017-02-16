@@ -87,7 +87,7 @@ var PhysicsSystem = DECS.createSystemClass(
 						shape.size.diameter / 2,
 						shape.size.diameter / 2,
 						shape.size.length,
-						shape.roundness
+						shape.detail
 					);
 					var quat = new CANNON.Quaternion();
 					quat.setFromAxisAngle(new CANNON.Vec3(1,0,0),-Math.PI/2);

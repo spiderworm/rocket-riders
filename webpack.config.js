@@ -30,4 +30,18 @@ module.exports = [
 			]
 		}
 	},
+	{
+		entry: "./demo/test.js",
+		output: {
+			filename: "./demo/test.js"
+		},
+		module: {
+			rules: [
+				{
+					test: /\.json$/,
+					use: 'json-loader'
+				}
+			]
+		}
+	},
 ];

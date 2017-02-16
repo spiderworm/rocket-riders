@@ -7,7 +7,7 @@ var BufferGeometry = THREE.BufferGeometry;
 var Vector3 = THREE.Vector3;
 var Vector2 = THREE.Vector2;
 
-function ArenaGeometry( width, height, depth, radius, roundness ) {
+function ArenaGeometry( width, height, depth, radius, detail ) {
 
 	Geometry.call( this );
 
@@ -18,10 +18,10 @@ function ArenaGeometry( width, height, depth, radius, roundness ) {
 		height: height,
 		depth: depth,
 		radius: radius,
-		roundness: roundness
+		detail: detail
 	};
 
-	var geometry = new SphereGeometry(radius, roundness * 4, roundness * 4, Math.PI/2, Math.PI * 2.01, 0, Math.PI);
+	var geometry = new SphereGeometry(radius, detail * 4, detail * 4, Math.PI/2, Math.PI * 2.01, 0, Math.PI);
 
 	var adjustments = new Vector3((width / 2) - radius, (height / 2) - radius, (depth / 2) - radius);
 
