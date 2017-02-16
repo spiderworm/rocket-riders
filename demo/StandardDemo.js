@@ -53,7 +53,7 @@ function StandardDemo() {
 	game.view = new ViewSystem();
 	game.addSystem(game.view);
 	game.view.tick();
-	game.view.cameraSystem.setTarget(game.view.meshes.getEntityMesh(game.rocket));
+	game.view.cameraSystem.setTarget(game.view.meshes.getEntityMesh(game.player));
 
 	window.game = game;
 	console.info('game', game);

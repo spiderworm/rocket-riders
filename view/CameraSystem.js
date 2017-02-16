@@ -10,7 +10,7 @@ var CameraSystem = DECS.createSystemClass(
 		setTarget: function(three) {
 			this.three = three;
 			this.three.add(this.camera);
-			this.camera.position.set(0, -5, 1);
+			this.camera.position.set(0, 0, 0);
 			this.lookAtTarget();
 		},
 		tick: function() {
@@ -19,7 +19,7 @@ var CameraSystem = DECS.createSystemClass(
 		lookAtTarget: function() {
 			if (this.three) {
 				//this.camera.lookAt(this.three.position);
-				this.camera.lookAt(new THREE.Vector3(0,0,0));
+				this.camera.lookAt(new THREE.Vector3(0,1,0));
 			}
 
 		}

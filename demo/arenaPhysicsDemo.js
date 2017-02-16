@@ -8,7 +8,7 @@ var StandardArena = require('../levels/StandardArena.js');
 
 var Ball = PhysicalEntity.createClass({
 	physics: {
-		mass: 1e2
+		mass: 1
 	},
 	shapes: {
 		0: new Sphere({ size: 10, detail: 20, wireframe: true })
@@ -26,14 +26,14 @@ function ArenaPhysicsDemo() {
 	for (var i=0; i<ballCount; i++) {
 		var ball = new Ball();
 		ball.physics.position = {
-			x: 50 + (Math.random() * 50),
-			y: 50 + (Math.random() * 50),
-			z: 50 + (Math.random() * 50)
+			x: 150 + (Math.random() * 50),
+			y: 150 + (Math.random() * 50),
+			z: 150 + (Math.random() * 50)
 		};
 		ball.physics.velocity = {
-			x: -100 + (Math.random() * 200),
-			y: -100 + (Math.random() * 200),
-			z: -100 + (Math.random() * 200)
+			x: -50 + (Math.random() * 100),
+			y: -50 + (Math.random() * 100),
+			z: -50 + (Math.random() * 100)
 		};
 		game.addEntity(ball);
 	}

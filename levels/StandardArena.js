@@ -17,12 +17,12 @@ var StandardArena = PhysicalEntity.createClass(
 				color: 0xffffff,
 				detail: 10,
 				size: {
-					x: 300,
-					y: 375,
-					z: 300
+					x: 600,
+					y: 750,
+					z: 600
 				},
-				position: { x: 0, y: 0, z: 150 },
-				borderRadius: 60
+				position: { x: 0, y: 0, z: 300 },
+				borderRadius: 100
 			}),
 			testCube: new Box({
 				position: {
