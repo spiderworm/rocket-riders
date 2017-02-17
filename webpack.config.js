@@ -1,5 +1,9 @@
 
-var path = require("path");
+var environment = {};
+
+try {
+	environment = require('./environment.js');
+} catch(e) {}
 
 module.exports = [
 	{
@@ -14,6 +18,10 @@ module.exports = [
 					use: 'json-loader'
 				}
 			]
+		},
+		devServer: {
+			host: environment.host || 'localhost',
+			port: environment.port || 8080
 		}
 	},
 	{

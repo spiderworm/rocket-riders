@@ -16,6 +16,7 @@ var Ball = PhysicalEntity.createClass({
 });
 
 function ArenaPhysicsDemo() {
+
 	var game = new StandardDemo();
 
 	game.arena = new StandardArena();
@@ -37,6 +38,8 @@ function ArenaPhysicsDemo() {
 		};
 		game.addEntity(ball);
 	}
+
+	game.view.cameraSystem.setTarget(game.view.meshes.getEntityMesh(game.player));
 
 	return game;
 }

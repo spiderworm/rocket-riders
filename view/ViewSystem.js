@@ -22,6 +22,7 @@ var ViewSystem = DECS.createSystemClass(
 			antialias: true
 		});
 		this.renderer.setPixelRatio(window.devicePixelRatio);
+		this.renderer.setClearColor(0x33aaff);
 
 		this.cameraSystem = new CameraSystem(this.camera);
 		this.addSystem(this.cameraSystem);
@@ -29,12 +30,20 @@ var ViewSystem = DECS.createSystemClass(
 		this.meshes = new MeshSystem(this.scene);
 		this.addSystem(this.meshes);
 
-		this.vrSystem = new VrSystem(this.camera, this.renderer);
+		this.vrSystem = new VrSystem(this.scene, this.camera, this.renderer);
+
+		window.addEventListener( 'resize', updateDimensions.bind(this), false );
+
+		function updateDimensions() {
+			this.camera.aspect = window.innerWidth / window.innerHeight;
+			this.camera.updateProjectionMatrix();
+		}
+
 	},
 	{
 		tick: function() {
-			this.renderer.setSize(window.innerWidth, window.innerHeight);
-			this.renderer.render(this.scene, this.camera);
+			//this.renderer.setSize(window.innerWidth, window.innerHeight);
+			//this.renderer.render(this.scene, this.camera);
 		}
 	}
 );
