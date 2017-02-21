@@ -11,6 +11,7 @@ var RocketThrustSystem = DECS.createSystemClass(
 			if (entity.isRocket && entity.throttle !== 0) {
 				var body = this.physics.getCannonBody(entity);
 				if (body) {
+					ms = Math.min(ms, 50);
 					var thrust = entity.throttle * ms * 4e2;
 
 					var force = new CANNON.Vec3(0, thrust, 0);
