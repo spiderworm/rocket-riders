@@ -25,9 +25,13 @@ module.exports = [
 		}
 	},
 	{
-		entry: "./demo/arenaPhysicsDemo.js",
+		entry: {
+			"arenaPhysicsDemo": "./demos/arenaPhysicsDemo.js",
+			"keyboardMouseDemo": "./demos/keyboardMouseDemo.js",
+			"test": "./demos/test.js"
+		},
 		output: {
-			filename: "./demo/arenaPhysicsDemo.js"
+			filename: "./demos/[name].js"
 		},
 		module: {
 			rules: [
@@ -37,19 +41,5 @@ module.exports = [
 				}
 			]
 		}
-	},
-	{
-		entry: "./demo/test.js",
-		output: {
-			filename: "./demo/test.js"
-		},
-		module: {
-			rules: [
-				{
-					test: /\.json$/,
-					use: 'json-loader'
-				}
-			]
-		}
-	},
+	}
 ];

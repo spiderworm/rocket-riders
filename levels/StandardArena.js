@@ -34,7 +34,7 @@ var StandardArena = PhysicalEntity.createClass(
 		},
 		entities: {
 			//skybox: new Skybox(),
-			plain: new Plain(-.01)
+			plain: new Plain(0)
 		}
 	}
 );

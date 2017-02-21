@@ -41,7 +41,10 @@ var PhysicsSystem = DECS.createSystemClass(
 				});
 
 				Object.keys(entity.shapes).forEach(function(id) {
-					this._addShape(entity.shapes[id], body);
+					var shape = entity.shapes[id];
+					if (shape.collision) {
+						this._addShape(entity.shapes[id], body);
+					}
 				}.bind(this));
 
 				if (entity.entities) {

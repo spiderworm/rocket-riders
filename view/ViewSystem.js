@@ -4,7 +4,9 @@ var THREE = require('three');
 
 var CameraSystem = require('./CameraSystem.js');
 var MeshSystem = require('./MeshSystem.js');
+var RenderSystem = require('./RenderSystem.js');
 var VrSystem = require('./VrSystem.js');
+var RocketTrailSystem = require('./RocketTrailSystem.js');
 
 var ViewSystem = DECS.createSystemClass(
 	function() {
@@ -14,36 +16,44 @@ var ViewSystem = DECS.createSystemClass(
 		document.querySelector('article').appendChild(this.canvas);
 
 		this.scene = new THREE.Scene();
-		this.camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1e20);
-		this.camera.up.set(0,0,1);
 
-		this.renderer = new THREE.WebGLRenderer({
-			canvas: this.canvas,
-			antialias: true
-		});
-		this.renderer.setPixelRatio(window.devicePixelRatio);
-		this.renderer.setClearColor(0x33aaff);
+		this.renderer = new RenderSystem(this.canvas);
+		this.vrSystem = new VrSystem(this.renderer);
 
-		this.cameraSystem = new CameraSystem(this.camera);
-		this.addSystem(this.cameraSystem);
+		this.vrEnabled = false;
+
+		window.addEventListener('vrdisplaypresentchange', (function(event) {
+			this.vrEnabled = event.display.isPresenting;
+		}).bind(this), false);
 
 		this.meshes = new MeshSystem(this.scene);
 		this.addSystem(this.meshes);
 
-		this.vrSystem = new VrSystem(this.scene, this.camera, this.renderer);
+		this.cameraSystem = new CameraSystem(this.meshes);
+		this.addSystem(this.cameraSystem);
 
-		window.addEventListener( 'resize', updateDimensions.bind(this), false );
+		window.addEventListener('resize', this._updateDimensions.bind(this), false);
+		this._updateDimensions();
 
-		function updateDimensions() {
-			this.camera.aspect = window.innerWidth / window.innerHeight;
-			this.camera.updateProjectionMatrix();
-		}
-
+		this.rocketTrailSystem = new RocketTrailSystem(this.scene);
+		this.addSystem(this.rocketTrailSystem);
 	},
 	{
 		tick: function() {
-			//this.renderer.setSize(window.innerWidth, window.innerHeight);
-			//this.renderer.render(this.scene, this.camera);
+			this.render();
+		},
+		render: function() {
+			if (this.cameraSystem.activeThreeCamera) {
+				if (this.vrEnabled) {
+					this.vrSystem.render(this.scene, this.cameraSystem.activeThreeCamera);
+				} else {
+					this.renderer.render(this.scene, this.cameraSystem.activeThreeCamera);
+				}
+			}
+		},
+		_updateDimensions: function() {
+			this.cameraSystem.updateDimensions();
+			this.renderer.updateDimensions();
 		}
 	}
 );

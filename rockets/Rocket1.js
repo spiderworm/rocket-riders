@@ -3,7 +3,6 @@ var PhysicalEntity = require('../PhysicalEntity.js');
 var Cylinder = require('../shapes/Cylinder.js');
 var Box = require('../shapes/Box.js');
 var Sphere = require('../shapes/Sphere.js');
-var RocketTrail1 = require('./RocketTrail1.js');
 
 var color = 0x990000;
 
@@ -24,50 +23,48 @@ var Rocket1 = PhysicalEntity.createClass(
 			linearDamping: .2,
 			angularDamping: .2
 		},
+		trail: {
+			position: { x: 0, y: -(bodyLength/2 + bodyThickness/2), z: 0 },
+			size: bodyThickness
+		},
 		entities: {
 			//trail: new RocketTrail1()
 		},
 		shapes: {
-			/*
+			trail: new Sphere({
+				color: 0xffe88a,
+				position: { y: -(bodyLength/2) },
+				size: bodyThickness,
+				detail: 15,
+				collision: false
+			}),
 			body: new Cylinder({
 				color: color,
 				size: {
 					diameter: 1,
 					length: 4
 				},
-				detail: 30
+				detail: 30,
+				wireframe: true
 			}),
-			*/
 			bodyCollision1: new Sphere({
 				color: color,
 				size: bodyThickness,
-				position: { y: (bodyLength/2) - (bodyThickness/2) }
+				position: { y: (bodyLength/2) - (bodyThickness/2) },
+				detail: 20
 			}),
 			bodyCollision2: new Sphere({
 				color: color,
 				size: bodyThickness,
-				position: { y: 0 }
+				position: { y: 0 },
+				detail: 20
 			}),
 			bodyCollision3: new Sphere({
 				color: color,
 				size: bodyThickness,
-				position: { y: -(bodyLength/2) + (bodyThickness/2) }
+				position: { y: -(bodyLength/2) + (bodyThickness/2) },
+				detail: 20
 			}),
-			/*
-			leftRail: new Box({
-				color: color,
-				size: {
-					x: .1,
-					y: 4,
-					z: .1
-				},
-				position: {
-					x: -.5,
-					y: 0,
-					z: -.6
-				}
-			}),
-			*/
 			leftRailCollision1: new Sphere({
 				color: color,
 				size: railThickness,
@@ -86,21 +83,6 @@ var Rocket1 = PhysicalEntity.createClass(
 					z: (-bodyThickness/2) + (railThickness/2)
 				}
 			}),
-			/*
-			rightRail: new Box({
-				color: color,
-				size: {
-					x: .1,
-					y: 4,
-					z: .1
-				},
-				position: {
-					x: .5,
-					y: 0,
-					z: -.6
-				}
-			}),
-			*/
 			rightRailCollision1: new Sphere({
 				color: color,
 				size: railThickness,

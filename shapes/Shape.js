@@ -10,6 +10,7 @@ function Shape(config) {
 	this.position = { x: 0, y: 0, z: 0 };
 	this.rotation = { w: 1, x: 0, y: 0, z: 0 },
 	this.size = 1;
+	this.collision = true;
 	objectHero.assignDeep(this, [config]);
 	addUniqueId(this);
 }

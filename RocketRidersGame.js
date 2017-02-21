@@ -1,15 +1,13 @@
 
+require('./dev/debug.js');
 var DECS = require('decs');
 var PhysicsSystem = require('./physics/PhysicsSystem.js');
 var RiderSystem = require('./riders/RiderSystem.js');
 var RocketSystem = require('./rockets/RocketSystem.js');
-var Rider = require('./riders/Rider.js');
-var Rider1 = require('./riders/Rider1.js');
-var Level1 = require('./levels/Level1.js');
-var Rocket = require('./rockets/Rocket1.js');
-var Arena1 = require('./levels/Arena1.js');
-var Plain = require('./levels/Plain.js');
 var StandardArena = require('./levels/StandardArena.js');
+
+var Rider1 = require('./riders/Rider1.js');
+var Rocket1 = require('./rockets/Rocket1.js');
 
 function RocketRidersGame() {
 	var game = new DECS();
@@ -17,42 +15,26 @@ function RocketRidersGame() {
 	game.physics = new PhysicsSystem();
 	game.addSystem(game.physics);
 
-	var riderSystem = new RiderSystem(game.physics);
-	game.addSystem(riderSystem);
+	game.riderSystem = new RiderSystem(game.physics);
+	game.addSystem(game.riderSystem);
 
-	var rocketSystem = new RocketSystem(game.physics);
-	game.addSystem(rocketSystem);
+	game.rocketSystem = new RocketSystem(game.physics);
+	game.addSystem(game.rocketSystem);
 
-	var rocket = new Rocket();
-	rocket.physics.position.z = -50;
-	game.addEntity(rocket);
+	game.arena = new StandardArena();
+	game.arena.id = 'arena';
+	game.addEntity(game.arena);
 
-	game.player = new Rider1();
-	game.player.id = 'player';
-	game.player.physics.position = {
-		x: rocket.physics.position.x,
-		y: rocket.physics.position.y,
-		z: rocket.physics.position.z + 1
-	};
-	game.addEntity(game.player);
+	game.rider = new Rider1();
+	game.rocket = new Rocket1();
+	game.addEntity(game.rider);
+	game.addEntity(game.rocket);
+	game.riderSystem.setRocket(game.rider, game.rocket);
 
-	riderSystem.setRocket(game.player, rocket);
+	game.rocket.throttle = 1;
 
-	setTimeout(function() { rocket.throttle = .1; }, 1000);
-
-	var plain = new Plain();
-	//game.addEntity(plain);
-
-	var standardArena = new StandardArena();
-	game.addEntity(standardArena);
-	this.arena = standardArena;
-/*
-	var arena1 = new Arena1();
-	game.addEntity(arena1);
-
-	var level1 = new Level1();
-	game.addEntity(level1);
-*/
+	window.game = game;
+	console.info('game', game);
 
 	return game;
 }
