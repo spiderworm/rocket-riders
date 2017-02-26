@@ -23,13 +23,6 @@ var StandardArena = PhysicalEntity.createClass(
 				},
 				position: { x: 0, y: 0, z: 300 },
 				borderRadius: 100
-			}),
-			testCube: new Box({
-				position: {
-					x: 0,
-					y: 0,
-					z: -20
-				}
 			})
 		},
 		entities: {

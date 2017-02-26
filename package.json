@@ -11,9 +11,10 @@
   "dependencies": {
     "cannon": "0.6.2",
     "decs": "0.0.3",
+    "keymaster": "^1.6.2",
     "object-hero": "0.0.2",
     "three": "0.84.0",
-    "webvr-polyfill":"0.9.25"
+    "webvr-polyfill": "0.9.25"
   },
   "devDependencies": {
     "json-loader": "0.5.4",

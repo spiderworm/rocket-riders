@@ -4,18 +4,21 @@ var StandardDemo = require('./StandardDemo.js');
 var DemoRiderAndRocket = require('./demo-entities/DemoRiderAndRocket.js');
 var BehindPlayerCamera = require('../view/cameras/BehindPlayerCamera.js');
 var StandardArena = require('../levels/StandardArena.js');
+var MouseKeyboardControls = require('../controls/MouseKeyboardControls.js');
 
 function KeyboardMouseDemo() {
 
 	var game = new StandardDemo();
 
 	game.arena = new StandardArena();
+	game.arena.shapes.arena.size = { x: 6000, y: 7500, z: 600 };
 	game.arena.id = 'arena';
 	game.addEntity(game.arena);
 
 	var riderAndRocket = new DemoRiderAndRocket(game.riderSystem);
 	var rider = riderAndRocket.rider;
 	var rocket = riderAndRocket.rocket;
+	rocket.throttle = 0;
 	rocket.physics.position = {
 		x: -75 + (Math.random() * 150),
 		y: -75 + (Math.random() * 150),
@@ -27,12 +30,29 @@ function KeyboardMouseDemo() {
 		y: 0,
 		z: -Math.PI + (2 * Math.PI * Math.random())
 	});
-	game.addEntity(rider);
 	game.addEntity(rocket);
+
+	rider.physics.position = {
+		x: rocket.physics.position.x,
+		y: rocket.physics.position.y,
+		z: rocket.physics.position.z + 1
+	};
+	rider.physics.rotation = {
+		w: rocket.physics.rotation.w,
+		x: rocket.physics.rotation.x,
+		y: rocket.physics.rotation.y,
+		z: rocket.physics.rotation.z
+	};
+	game.addEntity(rider);
 
 	var camera = new BehindPlayerCamera();
 	game.view.cameraSystem.addCamera(camera);
-	game.view.cameraSystem.attachCamera(camera, rider);
+	game.view.cameraSystem.attachCamera(camera, rocket);
+
+	var controls = new MouseKeyboardControls();
+	game.addEntity(controls);
+	game.controlsSystem.activateControls(controls);
+	game.controlsSystem.setTarget(rider);
 
 	return game;
 }

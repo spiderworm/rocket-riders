@@ -44,6 +44,8 @@ function ArenaPhysicsDemo() {
 			y: 0,
 			z: -Math.PI + (2 * Math.PI * Math.random())
 		});
+		delete entities.rider.controls;
+		entities.rocket.throttle = 1;
 		game.addEntity(entities.rider);
 		game.addEntity(entities.rocket);
 	}

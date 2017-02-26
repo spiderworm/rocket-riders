@@ -11,12 +11,79 @@ var ThreeArenaGeometry = require('./ThreeArenaGeometry.js');
 
 var wireframes = false;
 
+var Material = THREE.MeshBasicMaterial;
+
 function createMaterial(color, forceWireframe) {
-	var Material = THREE.MeshBasicMaterial;
 	return new Material({
 		color: color,
 		wireframe: forceWireframe ? true : wireframes
 	});
+}
+
+function createDebugMaterial(color, settings) {
+	switch(settings.type) {
+		case 'checkerboard':
+			var width = 2;
+			var height = 2;
+			var pixels = width * height;
+			var colorChannels = 4;
+			var data = new Uint8Array(pixels * colorChannels);
+			for (var i=0; i<pixels; i++) {
+				var row = Math.floor(i/width);
+				var col = i - (row * width);
+				if (
+					(row%2 === 0 && col%2 === 0) ||
+					(row%2 === 1 && col%2 === 1)
+				) {
+					value = 120;
+				} else {
+					value = 150;
+				}
+
+				data[i * colorChannels] =
+				data[i * colorChannels + 1] =
+				data[i * colorChannels + 2] = value;
+				data[i * colorChannels + 3] = 0;
+			}
+
+			var format = THREE.RGBAFormat;
+			var wrapS = wrapT = THREE.RepeatWrapping;
+
+			var texture = new THREE.DataTexture(
+				data,
+				width,
+				height,
+				format/*,
+				type,
+				mapping,
+				wrapS,
+				wrapT,
+				magFilter,
+				minFilter,
+				anisotropy
+			*/);
+			texture.wrapS = wrapS;
+			texture.wrapT = wrapT;
+			texture.magFilter = THREE.NearestFilter;
+			texture.minFilter = THREE.NearestFilter;
+			texture.generateMipmaps = true;
+			texture.repeat.set(settings.repeatS || 8, settings.repeatT || 8);
+			texture.anisotropy = 16;
+			texture.needsUpdate = true;
+
+			return new Material({
+				color: color,
+				wireframe: false,
+				map: texture
+			});
+		break;
+		default:
+			return new Material({
+				color: color,
+				wireframe: true
+			});
+		break;
+	}
 }
 
 var defaultMaterial = createMaterial(0xffffff);
@@ -126,7 +193,9 @@ var MeshSystem = DECS.createSystemClass(
 				break;
 			}
 			var material = defaultMaterial;
-			if (shape.color) {
+			if (shape.debug) {
+				material = createDebugMaterial(shape.color, shape.debug);
+			} else if (shape.color) {
 				material = createMaterial(shape.color, shape.wireframe);
 			}
 			var mesh = new THREE.Mesh(geometry, material);

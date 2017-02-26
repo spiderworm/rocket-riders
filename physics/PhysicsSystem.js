@@ -12,7 +12,7 @@ var BoundaryCannonShape = require('./BoundaryCannonShape.js');
 var PhysicsSystem = DECS.createSystemClass(
 	function() {
 		this.cannon = new CANNON.World();
-		this.cannon.defaultContactMaterial.friction = .001;
+		this.cannon.defaultContactMaterial.friction = .0001;
 		this.cannon.gravity.set(0,0,-9.82);
 		this.cannon.broadphase = new CANNON.NaiveBroadphase();
 		this.cannon.solver.iterations = 50;

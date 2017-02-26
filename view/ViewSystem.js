@@ -17,30 +17,43 @@ var ViewSystem = DECS.createSystemClass(
 
 		this.scene = new THREE.Scene();
 
-		this.renderer = new RenderSystem(this.canvas);
-		this.vrSystem = new VrSystem(this.renderer);
-
-		this.vrEnabled = false;
-
-		window.addEventListener('vrdisplaypresentchange', (function(event) {
-			this.vrEnabled = event.display.isPresenting;
-		}).bind(this), false);
-
 		this.meshes = new MeshSystem(this.scene);
 		this.addSystem(this.meshes);
 
 		this.cameraSystem = new CameraSystem(this.meshes);
 		this.addSystem(this.cameraSystem);
 
+		this.renderer = new RenderSystem(this.canvas, this.scene, this.cameraSystem);
+		this.vrSystem = new VrSystem(this.renderer, this.scene, this.cameraSystem);
+
+		this.vrEnabled = false;
+
+		window.addEventListener('vrdisplaypresentchange', (function(event) {
+			if (event.display.isPresenting) {
+				this.activateVr();
+			} else {
+				this.deactivateVr();
+			}
+		}).bind(this), false);
+
 		window.addEventListener('resize', this._updateDimensions.bind(this), false);
 		this._updateDimensions();
 
 		this.rocketTrailSystem = new RocketTrailSystem(this.scene);
 		this.addSystem(this.rocketTrailSystem);
+
+		this.deactivateVr();
 	},
 	{
 		tick: function() {
-			this.render();
+		},
+		activateVr: function() {
+			this.renderer.deactivate();
+			this.vrSystem.activate();
+		},
+		deactivateVr: function() {
+			this.vrSystem.deactivate();
+			this.renderer.activate();
 		},
 		render: function() {
 			if (this.cameraSystem.activeThreeCamera) {

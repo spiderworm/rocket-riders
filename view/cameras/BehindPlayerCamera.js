@@ -2,7 +2,7 @@
 var Camera = require('./Camera.js');
 
 var BehindPlayerCamera = Camera.createClass({
-	physics: { position: { x: 0, y: -10, z: 3 } },
+	physics: { position: { x: 0, y: -20, z: 3 } },
 	focusVector: { x: 0, y: 10, z: 1 }
 });
 

@@ -22,7 +22,8 @@ module.exports = [
 		devServer: {
 			host: environment.host || 'localhost',
 			port: environment.port || 8080
-		}
+		},
+		devtool: 'eval-source-map'
 	},
 	{
 		entry: {
@@ -40,6 +41,7 @@ module.exports = [
 					use: 'json-loader'
 				}
 			]
-		}
+		},
+		devtool: 'eval-source-map'
 	}
 ];

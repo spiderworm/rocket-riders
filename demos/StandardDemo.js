@@ -5,6 +5,7 @@ var PhysicsSystem = require('../physics/PhysicsSystem.js');
 var RiderSystem = require('../riders/RiderSystem.js');
 var RocketSystem = require('../rockets/RocketSystem.js');
 var ViewSystem = require('../view/ViewSystem.js');
+var ControlsSystem = require('../controls/ControlsSystem.js');
 
 function StandardDemo() {
 	var game = new DECS();
@@ -17,6 +18,9 @@ function StandardDemo() {
 
 	game.rocketSystem = new RocketSystem(game.physics);
 	game.addSystem(game.rocketSystem);
+
+	game.controlsSystem = new ControlsSystem();
+	game.addSystem(game.controlsSystem);
 
 	game.view = new ViewSystem();
 	game.addSystem(game.view);

@@ -45,7 +45,7 @@ var Level1 = Level.createClass(
 			var blockSizeZ = 10;
 			var blockCountX = blockCountY = 3;
 
-			var blockDetailCount = Math.ceil(blockSizeX * blockSizeY / 2.5e5);
+			var blockDetailCount = Math.ceil(blockSizeX * blockSizeY / 1e7);
 
 			for (var x = -Math.floor(blockCountX / 2); x <= Math.floor(blockCountX / 2); x++) {
 				for (var y = -Math.floor(blockCountY / 2); y <= Math.floor(blockCountY / 2); y++) {

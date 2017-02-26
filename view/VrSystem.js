@@ -18,11 +18,14 @@ var VREffect = require('three/examples/js/effects/VREffect.js');
 var WEBVR = require('./external/WebVr.js');
 
 var VrSystem = DECS.createSystemClass(
-	function(renderSystem) {
+	function(renderSystem, threeScene, cameraSystem) {
 
 		if (WEBVR.isAvailable() === false) {
 			document.body.appendChild(WEBVR.getMessage());
 		}
+
+		this.threeScene = threeScene;
+		this.cameraSystem = cameraSystem;
 
 		this.vrDisplay = null;
 
@@ -41,12 +44,21 @@ var VrSystem = DECS.createSystemClass(
 			;
 			var button = WEBVR.getButton(this.effect);
 			document.body.appendChild(button);
+			//setTimeout(function() { button.click(); }, 1000);
 		}
+
+		this._animate();
 	},
 	{
+		activate: function() {
+			this.isActive = true;
+		},
+		deactivate: function() {
+			this.isActive = false;
+		},
 		render: function(scene, threeCamera) {
-			if (threeCamera !== this._threeCamera) {
-				this._threeCamera = threeCamera;
+			if (threeCamera !== this._lastThreeCamera) {
+				this._lastThreeCamera = threeCamera;
 				if (this.controls) {
 					this.controls.dispose();
 				}
@@ -54,6 +66,9 @@ var VrSystem = DECS.createSystemClass(
 				if (this.vrDisplay) {
 					this.controls.setVRDisplay(this.vrDisplay);
 				}
+				threeCamera.parent.quaternion.set(.7071, 0, 0, .7071);
+				threeCamera.parent.position.set(0, 0, 0);
+				this.controls.resetPose();
 			}
 			this.controls.update();
 			this.effect.render(scene, threeCamera);
@@ -66,6 +81,12 @@ var VrSystem = DECS.createSystemClass(
 			if (this.controls) {
 				this.controls.setVRDisplay(displays[0]);
 			}
+		},
+		_animate: function() {
+			if (this.isActive) {
+				this.render(this.threeScene, this.cameraSystem.activeThreeCamera);
+			}
+			this.effect.requestAnimationFrame(this._animate.bind(this));
 		}
 	}
 );
