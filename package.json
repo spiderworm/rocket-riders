@@ -11,7 +11,9 @@
   "dependencies": {
     "cannon": "0.6.2",
     "decs": "0.0.3",
+    "html5-gamepad": "^1.0.0",
     "keymaster": "^1.6.2",
+    "mouse-event": "^1.0.5",
     "object-hero": "0.0.2",
     "three": "0.84.0",
     "webvr-polyfill": "0.9.25"

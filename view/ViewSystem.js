@@ -26,7 +26,13 @@ var ViewSystem = DECS.createSystemClass(
 		this.renderer = new RenderSystem(this.canvas, this.scene, this.cameraSystem);
 		this.vrSystem = new VrSystem(this.renderer, this.scene, this.cameraSystem);
 
-		this.vrEnabled = false;
+		window.onvrdisplayconnected = function() {
+			this.activateVr();
+		}.bind(this);
+
+		window.onvrdisplaydisconnected = function() {
+			this.deactivateVr();
+		}.bind(this);
 
 		window.addEventListener('vrdisplaypresentchange', (function(event) {
 			if (event.display.isPresenting) {
@@ -54,15 +60,6 @@ var ViewSystem = DECS.createSystemClass(
 		deactivateVr: function() {
 			this.vrSystem.deactivate();
 			this.renderer.activate();
-		},
-		render: function() {
-			if (this.cameraSystem.activeThreeCamera) {
-				if (this.vrEnabled) {
-					this.vrSystem.render(this.scene, this.cameraSystem.activeThreeCamera);
-				} else {
-					this.renderer.render(this.scene, this.cameraSystem.activeThreeCamera);
-				}
-			}
 		},
 		_updateDimensions: function() {
 			this.cameraSystem.updateDimensions();

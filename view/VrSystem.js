@@ -12,7 +12,7 @@ window.WebVRConfig = window.WebVRConfig || {
 var WebVrPolyfill = require('webvr-polyfill');
 
 var THREE = require('three');
-window.THREE = THREE;
+window.THREE = THREE; // this is needed to set the THREE global for the next two files...
 var VRControls = require('three/examples/js/controls/VRControls.js');
 var VREffect = require('three/examples/js/effects/VREffect.js');
 var WEBVR = require('./external/WebVr.js');
@@ -44,7 +44,6 @@ var VrSystem = DECS.createSystemClass(
 			;
 			var button = WEBVR.getButton(this.effect);
 			document.body.appendChild(button);
-			//setTimeout(function() { button.click(); }, 1000);
 		}
 
 		this._animate();
@@ -52,9 +51,13 @@ var VrSystem = DECS.createSystemClass(
 	{
 		activate: function() {
 			this.isActive = true;
+			this.effect.requestPresent();
 		},
 		deactivate: function() {
 			this.isActive = false;
+			if (this.vrDisplay) {
+				this.effect.exitPresent();
+			}
 		},
 		render: function(scene, threeCamera) {
 			if (threeCamera !== this._lastThreeCamera) {

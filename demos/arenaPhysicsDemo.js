@@ -1,6 +1,6 @@
 
 var DECS = require('decs');
-var StandardDemo = require('./StandardDemo.js');
+var StandardDemo = require('./base-demos/StandardDemo.js');
 var DemoRiderAndRocket = require('./demo-entities/DemoRiderAndRocket.js');
 var ArenaCamera = require('../view/cameras/ArenaCamera.js');
 var Ball = require('./demo-entities/Ball.js');

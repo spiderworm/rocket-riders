@@ -28,7 +28,7 @@ module.exports = [
 	{
 		entry: {
 			"arenaPhysicsDemo": "./demos/arenaPhysicsDemo.js",
-			"keyboardMouseDemo": "./demos/keyboardMouseDemo.js",
+			"standardControlsDemo": "./demos/standardControlsDemo.js",
 			"test": "./demos/test.js"
 		},
 		output: {

@@ -1,12 +1,11 @@
 
 var DECS = require('decs');
 var StandardDemo = require('./StandardDemo.js');
-var DemoRiderAndRocket = require('./demo-entities/DemoRiderAndRocket.js');
-var BehindPlayerCamera = require('../view/cameras/BehindPlayerCamera.js');
-var StandardArena = require('../levels/StandardArena.js');
-var MouseKeyboardControls = require('../controls/MouseKeyboardControls.js');
+var DemoRiderAndRocket = require('../demo-entities/DemoRiderAndRocket.js');
+var BehindPlayerCamera = require('../../view/cameras/BehindPlayerCamera.js');
+var StandardArena = require('../../levels/StandardArena.js');
 
-function KeyboardMouseDemo() {
+function ControlsDemo(controls) {
 
 	var game = new StandardDemo();
 
@@ -49,7 +48,6 @@ function KeyboardMouseDemo() {
 	game.view.cameraSystem.addCamera(camera);
 	game.view.cameraSystem.attachCamera(camera, rocket);
 
-	var controls = new MouseKeyboardControls();
 	game.addEntity(controls);
 	game.controlsSystem.activateControls(controls);
 	game.controlsSystem.setTarget(rider);
@@ -72,4 +70,4 @@ function normalize(quat) {
 	};
 }
 
-module.exports = new KeyboardMouseDemo();
+module.exports = ControlsDemo;

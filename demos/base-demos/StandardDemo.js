@@ -1,11 +1,11 @@
 
-require('../dev/debug.js');
+require('../../dev/debug.js');
 var DECS = require('decs');
-var PhysicsSystem = require('../physics/PhysicsSystem.js');
-var RiderSystem = require('../riders/RiderSystem.js');
-var RocketSystem = require('../rockets/RocketSystem.js');
-var ViewSystem = require('../view/ViewSystem.js');
-var ControlsSystem = require('../controls/ControlsSystem.js');
+var PhysicsSystem = require('../../physics/PhysicsSystem.js');
+var RiderSystem = require('../../riders/RiderSystem.js');
+var RocketSystem = require('../../rockets/RocketSystem.js');
+var ViewSystem = require('../../view/ViewSystem.js');
+var ControlsSystem = require('../../controls/ControlsSystem.js');
 
 function StandardDemo() {
 	var game = new DECS();

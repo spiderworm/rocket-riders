@@ -1,6 +1,6 @@
 
 var DECS = require('decs');
-var keymaster = require('keymaster');
+var gameInput = require('./gameInput.js');
 
 var ControlsSystem = DECS.createSystemClass(
 	function() {
@@ -54,14 +54,6 @@ var ControlsSystem = DECS.createSystemClass(
 			return activeProfiles;
 		},
 		_applyProfileToProfile: function(targetProfile, sourceProfile, isActive, scale) {
-			if (
-				!isActive &&
-				sourceProfile.name === targetProfile.name &&
-				sourceProfile.name === 'throttleChoke' &&
-				targetProfile.value === 1
-			) {
-				debugger;
-			}
 			if (isActive) {
 				this._applyActiveProfileToProfile(targetProfile, sourceProfile, scale);
 			} else {
@@ -70,9 +62,13 @@ var ControlsSystem = DECS.createSystemClass(
 		},
 		_applyActiveProfileToProfile: function(targetProfile, sourceProfile, scale) {
 			var value = targetProfile.value || 0;
+			var direction = sourceProfile.invert ? -1 : 1;
 			switch(targetProfile.inputMethod) {
 				case 'add':
-					value += sourceProfile.value * scale || 0;
+					value += (sourceProfile.value * scale * direction) || 0;
+				break;
+				case 'subtract':
+					value -= (sourceProfile.value * scale * direction) || 0;
 				break;
 				case 'toggle':
 					value = (
@@ -83,7 +79,7 @@ var ControlsSystem = DECS.createSystemClass(
 				break;
 				case 'set':
 				default:
-					value = sourceProfile.value;
+					value = sourceProfile.value * direction;
 				break;
 			}
 			this._setProfileValue(targetProfile, value);
@@ -119,7 +115,11 @@ var ControlsSystem = DECS.createSystemClass(
 		_getActiveProfiles: function(topProfile) {
 			var profiles = this._getProfiles(topProfile);
 			return profiles.filter(function(profile) {
-				if (this._checkProfileKeypress(profile)) {
+				if (
+					this._checkProfileKeypress(profile) ||
+					this._checkProfileButtonPress(profile) ||
+					this._checkProfileAxis(profile)
+				) {
 					return true;
 				}
 				var subProfiles = this._getActiveProfiles(profile);
@@ -129,11 +129,29 @@ var ControlsSystem = DECS.createSystemClass(
 				return false;
 			}.bind(this));
 		},
-		_checkProfileKeypress: function(input) {
-			if (input.keys) {
-				return Object.keys(input.keys).find(function(key) {
-					return keymaster.isPressed(input.keys[key]);
+		_checkProfileKeypress: function(profile) {
+			if (profile.keys) {
+				return Object.keys(profile.keys).find(function(key) {
+					return gameInput.keyboard.isPressed(profile.keys[key]);
 				});
+			}
+			return false;
+		},
+		_checkProfileButtonPress: function(profile) {
+			if (profile.buttons && gameInput.gamepads[0]) {
+				return Object.keys(profile.buttons).find(function(key) {
+					return gameInput.gamepads[0].isPressed(profile.buttons[key]);
+				});
+			}
+			return false;
+		},
+		_checkProfileAxis: function(profile) {
+			if (profile.axis && gameInput.gamepads[0]) {
+				return Object.keys(profile.axis).find(function(key) {
+					var value = gameInput.gamepads[0].getAxis(profile.axis[key]);
+					this._setProfileValue(profile, value);
+					return value !== 0;
+				}.bind(this));
 			}
 			return false;
 		}
