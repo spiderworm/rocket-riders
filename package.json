@@ -15,6 +15,7 @@
     "keymaster": "^1.6.2",
     "mouse-event": "^1.0.5",
     "object-hero": "0.0.2",
+    "pointer-trap": "^0.0.0",
     "three": "0.84.0",
     "webvr-polyfill": "0.9.25"
   },

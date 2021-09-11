@@ -9,7 +9,7 @@ var Ball = PhysicalEntity.createClass({
 	shapes: {
 		0: new Sphere({
 			color: 0x999999,
-			size: 10,
+			size: 20,
 			detail: 20,
 			wireframe: true
 		})

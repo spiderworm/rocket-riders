@@ -30,7 +30,7 @@ function ArenaPhysicsDemo() {
 		game.addEntity(ball);
 	}
 
-	var playerCount = 10;
+	var playerCount = 50;
 	for (var i=0; i<playerCount; i++) {
 		var entities = new DemoRiderAndRocket(game.riderSystem);
 		entities.rocket.physics.position = {

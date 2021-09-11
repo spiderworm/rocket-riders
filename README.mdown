@@ -3,6 +3,6 @@
 ## Install
 
 * npm install
-* npm install --global webpack-dev-server
+* npm install --global webpack-dev-server@2.3.0
 * webpack-dev-server
 * browse to: http://localhost:8080
